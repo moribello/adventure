@@ -7,7 +7,7 @@ import sys
 def print_pause(message):
     """Print a line and pause before continuing."""
     print(message)
-    time.sleep(.5)
+    time.sleep(1.5)
 
 
 def valid_input(choices):
@@ -46,7 +46,7 @@ def intro():
     print_pause("\033[1;32m farm \033[0m")
     print_pause("\nYou can also get a look at your inventory at any time"
                 " just by typing\033[1;32m inventory \033[0m")
-    play_now = input("Press the \'return\' key to start playing.")
+    play_now = input("\nPress the \'return\' key to start playing.")
     for n in range(10):
         print("*")
         time.sleep(.5)
@@ -106,13 +106,12 @@ def forest(monster):
     """
     choices = ["Pick flowers", "Go to the shed", "Return to the clearing"]
     print_pause("\nYou are in a charming glenn in the forest, covered in all"
-                " varities of widflowers.")
+                " varities of wildflowers.")
     print_pause("A gentle waterfall tinkles off to the left.")
     print_pause("To the right you can barely make out the ramshackle shed"
                 " you saw from the clearing.")
     if "fought monster" not in actions:
-        print_pause(f"In the center of the clearing stands a fearsome"
-                    " {monster}!")
+        print_pause(f"In the clearing stands a fearsome {monster}!")
         choices.extend(["Run away!", "Fight!"])
     action = valid_input(choices)
     if action == "Pick flowers":
@@ -285,13 +284,13 @@ def house_livingroom():
     if "make coffee" not in actions:
         print_pause("From the loud snoring coming from it, this is"
                     " probably the bedroom.")
-    if "tray" not in inventory:
-        print_pause("A tea tray sits on the coffee table.")
-        choices.append("Pick up the tray")
-    if "vase" not in inventory:
+    if "vase" not in inventory and "flowers in vase" not in inventory:
         print_pause("An interesting-looking vase sits on a bureau against the"
                     " right wall.")
         choices.append("Pick up the vase")
+    if "tray" not in inventory:
+        print_pause("A tea tray sits on the coffee table.")
+        choices.append("Pick up the tray")
     action = valid_input(choices)
     if action == "Go to the kitchen":
         house_kitchen()
@@ -349,6 +348,13 @@ def house_livingroom():
 
 
 def house_kitchen():
+    """Define and control interaction in kitchen.
+
+    In this room the flowers may be placed in the vase to add
+    "flowers in vase" to the inventory (and remove "vase" and
+    "flowers" and coffee may be made (adds "cup of coffee" to
+    inventory and "made coffee" to actions list.)
+    """
     choices = ["Go to living room"]
     if "vase" in inventory and "flowers" in inventory:
         if "flowers in vase" not in inventory:
