@@ -4,6 +4,7 @@ import random
 import sys
 
 
+
 def print_pause(message):
     """Print a line and pause before continuing."""
     print(message)
@@ -31,7 +32,25 @@ def valid_input(choices):
                             " one of the following choices.")
 
 def intro():
-    """Begin the game by introducing the scene."""
+    """Begin the game by introducing the scene and interaction."""
+    print_pause("Welcome to the adventure mini-game!")
+    print_pause("Here you'll be able to explore a small part of a"
+                " fantasy world")
+    print_pause("I'm smart enough to recognize commands based on single words.")
+    print_pause("So, for instance, if one of your choices is: ")
+    print_pause("\033[1;32m\"Go to the farmhouse\"\033[0m")
+    print_pause("All you need to do is type: ")
+    print_pause("\033[1;32m farmhouse \033[0m")
+    print_pause("or: ")
+    print_pause("\033[1;32m house \033[0m")
+    print_pause("or even: ")
+    print_pause("\033[1;32m farm \033[0m")
+    print_pause("\nYou can also get a look at your inventory at any time"
+                " just by typing\033[1;32m inventory \033[0m")
+    play_now = input("Press the \'return\' key to start playing.")
+    for n in range(10):
+        print("*")
+        time.sleep(.5)
     print_pause("You awaken with a splitting headache in the middle of a field.")
     print_pause("Based on the large number of empty bottles lying around you"
                     " it must have been a heck of a party.")
@@ -263,7 +282,7 @@ def house_livingroom():
     print_pause("Directly ahead is a closed door.")
     if "make coffee" not in actions:
         print_pause("From the loud snoring coming from it, this is"
-                        "probably the bedroom.")
+                        " probably the bedroom.")
     if "tray" not in inventory:
         print_pause("A tea tray sits on the coffee table.")
         choices.append("Pick up the tray")
@@ -425,12 +444,12 @@ def play_again():
         else:
             print_pause("I'm sorry - I don't understand that.")
 
-
 def generate_RME():
     """Select random monster from list and return to game."""
     RME = ["ogre", "goblin", "gnoll", "orc", "personal injury lawyer"]
     monster = random.choice(RME)
     return monster
+
 
 inventory = []
 actions = []
