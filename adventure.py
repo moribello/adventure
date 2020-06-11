@@ -253,7 +253,7 @@ def house_livingroom():
     This area contains the tray, which is required to bring everything to the
     bedroom, and the vase, which is needed to bring flowers.
     """
-    choices = ["Go to the kitchen", "Sit on the couch",
+    choices = ["Go to the kitchen", "Return to entryway", "Sit on the couch",
                     "Read magazines", "Knock on the bedroom door"]
     print_pause("\nYou are standing in the living room of the farmhouse.")
     print_pause("A comfy-looking couch sits next to a coffee table covered in"
@@ -269,7 +269,9 @@ def house_livingroom():
         choices.append("Pick up the vase")
     action = valid_input(choices)
     if action == "Go to the kitchen":
-        farmhouse_kitchen()
+        house_kitchen()
+    elif action == "Return to entryway":
+        house_entry()
     elif action == "Sit on the couch":
         print_pause("Well. Isn't this nice.")
         print_pause("After awhile you get the vague sense that you're supposed"
@@ -300,12 +302,22 @@ def house_livingroom():
                         " the volume and frequency of the snoring.")
         elif "flowers in vase" in inventory and "cup of coffee" in inventory:
                 house_bedroom(monster)
+        elif "flowers" in inventory:
+            if "vase" not in inventory:
+                print_pause("You can't just give someone a handful of flowers.")
+                print_pause("Maybe arrange them in a nice vase with some water"
+                        " in it.")
+            else:
+                print_pause("Those flowers will never survive without"
+                            " some water. Maybe you can get some from the"
+                            " kitchen.")
         else:
             print_pause("You should probably come bearing gifts.")
-            print_pause("Flowers are always a nice present.")
+            print_pause("Flowers are always a nice present. Maybe check the"
+                        " surrounding forest for some wildflowers.")
     house_livingroom()
 
-def farmhouse_kitchen():
+def house_kitchen():
     choices = ["Go to living room"]
     if "vase" in inventory and "flowers" in inventory:
         if "flowers in vase" not in inventory:
@@ -354,21 +366,20 @@ def farmhouse_kitchen():
                 print_pause("Perhaps some kind of tray would make it easier"
                             " to carry the cup of coffee.")
         actions.append("make coffee")
-        farmhouse_kitchen()
+        house_kitchen()
     elif action == "Put flowers in vase":
         if "tray" not in inventory:
             if "cup of coffee" in inventory:
                 print_pause("You quickly realize that you aren\'t going to be able to hold that hot cup of coffee"
                             " and a vase full of flowers at the same time.")
                 print_pause("Perhaps if you had some kind of tray...")
-                farmhouse_kitchen()
-            else:
-                print_pause("You add water from the tap to the vase and"
-                            " carefully arrange the flowers you picked.")
-                inventory.append("flowers in vase")
-                inventory.remove("flowers")
-                inventory.remove("vase")
-                farmhouse_kitchen()
+        else:
+            print_pause("You add water from the tap to the vase and"
+                        " carefully arrange the flowers you picked.")
+            inventory.append("flowers in vase")
+            inventory.remove("flowers")
+            inventory.remove("vase")
+        house_kitchen()
     elif action == "Pick up cup of coffee":
         if "tray" not in inventory:
             print_pause("The coffee is still too hot to carry without some"
@@ -377,8 +388,7 @@ def farmhouse_kitchen():
             print_pause("You pick up the cup of coffee and place it on"
                         " the tray.")
             inventory.append("cup of coffee")
-        farmhouse_kitchen()
-
+        house_kitchen()
 
 def house_bedroom(monster):
     print_pause("The door opens to reveal Emily, wearing a big"
