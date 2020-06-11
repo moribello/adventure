@@ -19,6 +19,10 @@ def valid_input(choices):
             print_pause("You are currently carrying")
             for item in inventory:
                 print_pause(item)
+        elif valid_input == "quit":
+            verify_quit = input("Are you sure you want to quit? \n")
+            if verify_quit == "yes" or verify_quit == "y":
+                break
         else:
             for choice in choices:
                 if valid_input.lower() in choice.lower():
