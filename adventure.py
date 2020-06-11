@@ -21,12 +21,10 @@ def valid_input(choices):
             print_pause("You are currently carrying:")
             for item in inventory:
                 print_pause(item)
-        elif valid_input == "actions":
-            for action in actions:
-                print(action)
         else:
             for choice in choices:
                 if valid_input.lower() in choice.lower():
+                    print_pause("\n" + choice)
                     return choice
             print_pause("I'm sorry - I don't understand that. Please select"
                             " one of the following choices.")
@@ -63,9 +61,10 @@ def clearing():
                     " shed", "Enter the forest"]
     print_pause("\nYou are standing in a pleasant field on the outskirts"
                     " of a forest.")
-    print_pause("The beauty of nature has been somewhat"
-                    " spoiled by the fact that someone left a bunch of bottles"
-                    " lying around the place")
+    if "clean up bottles" not in actions:
+        print_pause("The beauty of nature has been somewhat"
+                        " spoiled by the fact that someone left a bunch of" " bottles lying around the place.")
+        choices.append("Clean up bottles")
     print_pause("To the right you see a large, old farmhouse.")
     print_pause("Directly ahead is a small garden shed.")
     print_pause("To your left stands a dark, forbodeing forest. ")
@@ -87,6 +86,12 @@ def clearing():
         print_pause("      - Emily")
         print_pause("p.s. - the magic word is XYZZY\n")
         inventory.append("note")
+        clearing()
+    elif action == "Clean up bottles":
+        print_pause("You pick up your discarded empties. Make sure you dispose"
+                        " of them in a recycling bin.")
+        actions.append("clean up bottles")
+        inventory.append("empty bottles")
         clearing()
 
 def forest(monster):
