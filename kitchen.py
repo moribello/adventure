@@ -34,9 +34,6 @@ def farmhouse_kitchen():
                     " brass tap.")
     print_pause("To the right of that, on the counter, are several coffee"
                     " mugs and a fancy-looking coffee maker.")
-    print_pause("An old refrigerator stands off to the right.")
-    print_pause("A quick peek inside reveals a carton of milk"
-                    " and half of an ancient pizza.")
     if "make coffee" in actions and "cup of coffee" not in inventory:
         choices.append("Pick up cup of coffee")
         choices.remove("Make coffee")
