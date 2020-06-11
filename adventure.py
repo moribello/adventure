@@ -1,6 +1,7 @@
 """Adventure game for Udacity Intro to Programming class."""
 import time
 import random
+import sys
 
 
 def print_pause(message):
@@ -200,7 +201,7 @@ def farmhouse():
             farmhouse()
         else:
             print_pause("You find a key on the rusty key ring that seems to fit"
-                            " the front door and unlock the front door.")
+                            " and unlock the front door.")
             actions.append("unlock door")
             farmhouse()
 
@@ -259,8 +260,10 @@ def house_livingroom():
     print_pause("A comfy-looking couch sits next to a coffee table covered in"
                     " fashion magazines.")
     print_pause("To the left is what appears to be a small kitchen.")
-    print_pause("Directly ahead is a closed door. From the loud snoring coming"
-                    " from it, this is probably the bedroom.")
+    print_pause("Directly ahead is a closed door.")
+    if "make coffee" not in actions:
+        print_pause("From the loud snoring coming from it, this is"
+                        "probably the bedroom.")
     if "tray" not in inventory:
         print_pause("A tea tray sits on the coffee table.")
         choices.append("Pick up the tray")
@@ -316,7 +319,7 @@ def house_livingroom():
                             " kitchen.")
         else:
             print_pause("You should probably come bearing gifts.")
-            print_pause("Flowers are always a nice present."
+            print_pause("Flowers are always a nice present.")
             print_pause("Maybe check the surrounding forest for"
             " some wildflowers.")
     house_livingroom()
@@ -406,7 +409,7 @@ def house_bedroom(monster):
 
 def play_again():
     time.sleep(1)
-    for n in range(5)
+    for n in range(5):
         print("*")
         time.sleep(.25)
     while True:
@@ -418,7 +421,7 @@ def play_again():
             return inventory, actions, monster
         if restart == "n":
             print_pause("Thanks for playing!")
-            break
+            sys.exit()
         else:
             print_pause("I'm sorry - I don't understand that.")
 
@@ -433,12 +436,3 @@ inventory = []
 actions = []
 monster = generate_RME()
 intro()
-
-"""This is a temporary list
-house_kitchen
-
-
-actions:
-Make coffee
-flowers in vase
-"""
