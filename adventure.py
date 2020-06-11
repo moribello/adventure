@@ -261,11 +261,12 @@ def house_livingroom():
     print_pause("To the left is what appears to be a small kitchen.")
     print_pause("Directly ahead is a closed door. From the loud snoring coming"
                     " from it, this is probably the bedroom.")
-    print_pause("An interesting-looking vase and a lacquered tea tray sit"
-                    " atop a bureau against the right wall.")
     if "tray" not in inventory:
+        print_pause("A tea tray sits on the coffee table.")
         choices.append("Pick up the tray")
     if "vase" not in inventory:
+        print_pause("An interesting-looking vase sits on a bureau against the"
+                    " right wall.")
         choices.append("Pick up the vase")
     action = valid_input(choices)
     if action == "Go to the kitchen":
@@ -300,6 +301,8 @@ def house_livingroom():
             print_pause("You hammer on the bedroom door.")
             print_pause("The only effect this seems to have in an increase in"
                         " the volume and frequency of the snoring.")
+            print_pause("Some people just can't wake up without their"
+                        " morning coffee.")
         elif "flowers in vase" in inventory and "cup of coffee" in inventory:
                 house_bedroom(monster)
         elif "flowers" in inventory:
@@ -313,8 +316,9 @@ def house_livingroom():
                             " kitchen.")
         else:
             print_pause("You should probably come bearing gifts.")
-            print_pause("Flowers are always a nice present. Maybe check the"
-                        " surrounding forest for some wildflowers.")
+            print_pause("Flowers are always a nice present."
+            print_pause("Maybe check the surrounding forest for"
+            " some wildflowers.")
     house_livingroom()
 
 def house_kitchen():
@@ -342,6 +346,8 @@ def house_kitchen():
         print_pause("The scent of coffee seems to have woken"
                         " the sleeper up.")
         print_pause("At least the snoring seems to have stopped.")
+        print_pause("It might be worth knocking on the bedroom"
+                    " door again.")
         if "vase" in inventory or "flowers in vase" in inventory:
             if "tray" not in inventory:
                 print_pause("You quickly realize that you don't have"
@@ -395,27 +401,26 @@ def house_bedroom(monster):
                 " smile and a Starfleet Academy t-shirt.")
     print_pause("She reaches for the cup of coffee and beckons"
                 " for you to follow her into the bedroom.")
-    print_pause(f"\"By the way\", she asks. Have you seen my pet {monster}?")
-    print_pause("\n")
-    print_pause("We'll draw the curtain over the rest of this story. This"
-                "assignment is supposed to be rated PG.")
-    print_pause(f"Attacking a defenseless {monster} with a magic sword is one"
-                " thing, but anything could happen in a bedroom. We need to"
-                " think about the children. What would happen if they learned"
-                " Beyonce's 15 hair care tips?")
+    print_pause(f"\"By the way\", she asks. \"Have you seen my pet {monster}?\"")
     play_again()
 
 def play_again():
-    choices = ["play again", "quit"]
-    print_pause("Would you like to play again?")
-    action = valid_input()
-    if action == "play again":
-        inventory = []
-        actions = []
-        monster = generate_RME
-        return inventory, actions, monster
-    else:
-        print_pause("Thanks for playing!")
+    time.sleep(1)
+    for n in range(5)
+        print("*")
+        time.sleep(.25)
+    while True:
+        restart = input("Would you like to play again? (y or n) ")
+        if restart == "y":
+            inventory = []
+            actions = []
+            monster = generate_RME
+            return inventory, actions, monster
+        if restart == "n":
+            print_pause("Thanks for playing!")
+            break
+        else:
+            print_pause("I'm sorry - I don't understand that.")
 
 
 def generate_RME():
