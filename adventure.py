@@ -24,7 +24,6 @@ def valid_input(choices):
         else:
             for choice in choices:
                 if valid_input.lower() in choice.lower():
-                    print_pause("\n" + choice)
                     return choice
             print_pause("I'm sorry - I don't understand that. Please select"
                             " one of the following choices.")
@@ -441,8 +440,8 @@ def play_again():
         if restart == "y":
             inventory = []
             actions = []
-            monster = generate_RME
-            return inventory, actions, monster
+            monster = generate_RME()
+            intro()
         if restart == "n":
             print_pause("Thanks for playing!")
             sys.exit()
