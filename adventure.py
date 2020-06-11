@@ -16,19 +16,18 @@ def valid_input(choices):
             print_pause(choice)
         valid_input = input("What would you like to do?\n")
         if valid_input == "inventory":
-            print_pause("You are currently carrying")
+            print_pause("You are currently carrying:")
             for item in inventory:
                 print_pause(item)
-        elif valid_input == "quit":
-            verify_quit = input("Are you sure you want to quit? \n")
-            if verify_quit == "yes" or verify_quit == "y":
-                break
+        elif valid_input == "actions":
+            for action in actions:
+                print(action)
         else:
             for choice in choices:
                 if valid_input.lower() in choice.lower():
                     return choice
             print_pause("I'm sorry - I don't understand that. Please select"
-                            " one of the above choices.")
+                            " one of the following choices.")
 
 def intro():
     """Begin the game by introducing the scene."""
@@ -162,7 +161,7 @@ def farmhouse():
 
     Users must have the keys to unlock the door and continue on.
     """
-    choices = ["Knock on door", "Look under welcome mat", "Open door"
+    choices = ["Knock on door", "Look under welcome mat", "Open door",
                 "Return to clearing"]
     print_pause("\nYou are standing on the front porch of a weathered but"
                     " still pleasant-looking farmhouse. ")
@@ -307,18 +306,19 @@ def house_livingroom():
     house_livingroom()
 
 def farmhouse_kitchen():
-    choices = ["Go to living room", "Make coffee"]
+    choices = ["Go to living room"]
     if "vase" in inventory and "flowers" in inventory:
         if "flowers in vase" not in inventory:
             choices.append("Put flowers in vase")
-    print_pause("You are standing in a small but well equipped kitchen.")
+    print_pause("\nYou are standing in a small but well equipped kitchen.")
     print_pause("In front of you is a porcelain sink equipped with a fancy"
                     " brass tap.")
     print_pause("To the right of that, on the counter, are several coffee"
                     " mugs and a fancy-looking coffee maker.")
+    if "make coffee" not in actions:
+        choices.append("Make coffee")
     if "make coffee" in actions and "cup of coffee" not in inventory:
         choices.append("Pick up cup of coffee")
-        choices.remove("Make coffee")
         print_pause("A steaming cup of coffee sits on the counter.")
     action = valid_input(choices)
     if action == "Go to living room":
@@ -341,17 +341,20 @@ def farmhouse_kitchen():
             else:
                 print_pause("You carefully pour a cup of coffee and place"
                                 " it on the tray next to the vase")
-                actions.append("make coffee")
                 inventory.append("cup of coffee")
         else:
-            print_pause("You carefully pour a cup of coffee and place"
-                        " it on the tray next to the vase")
-            print_pause("The scent of coffee seems to have woken"
-                            " the sleeper up.")
-            print_pause("At least the snoring seems to have stopped.")
-            actions.append("make coffee")
-            inventory.append("cup of coffee")
-            farmhouse_kitchen()
+            if "tray" in inventory:
+                print_pause("You carefully pour a cup of coffee and place"
+                            " it on the tray.")
+                inventory.append("cup of coffee")
+            else:
+                print_pause("You carefully pour a cup of coffee but realize"
+                            " that it's too hot to carry around.")
+                print_pause("You put the hot cup of coffee down on the counter.")
+                print_pause("Perhaps some kind of tray would make it easier"
+                            " to carry the cup of coffee.")
+        actions.append("make coffee")
+        farmhouse_kitchen()
     elif action == "Put flowers in vase":
         if "tray" not in inventory:
             if "cup of coffee" in inventory:
@@ -368,14 +371,12 @@ def farmhouse_kitchen():
                 farmhouse_kitchen()
     elif action == "Pick up cup of coffee":
         if "tray" not in inventory:
-            if "flowers in vase" in inventory:
-                print_pause("You quickly realize that you aren\'t going to be able to hold that hot cup of coffee"
-                            " and a vase full of flowers at the same time.")
-            else:
-                print_pause("You carefully pour a cup of coffee and place"
-                                " it on the tray next to the vase")
-                actions.append("make coffee")
-                inventory.append("cup of coffee")
+            print_pause("The coffee is still too hot to carry without some"
+                            " kind of tray-shaped object.")
+        else:
+            print_pause("You pick up the cup of coffee and place it on"
+                        " the tray.")
+            inventory.append("cup of coffee")
         farmhouse_kitchen()
 
 
