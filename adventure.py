@@ -7,7 +7,7 @@ import sys
 def print_pause(message):
     """Print a line and pause before continuing."""
     print(message)
-    time.sleep(1.5)
+    time.sleep(.5)
 
 
 def valid_input(choices):
@@ -16,7 +16,7 @@ def valid_input(choices):
         print_pause("\nYou may:")
         for choice in choices:
             print_pause(choice)
-        valid_input = input("What would you like to do?\n")
+        valid_input = input("\nWhat would you like to do?\n")
         if valid_input == "inventory":
             print_pause("You are currently carrying:")
             for item in inventory:
@@ -25,7 +25,7 @@ def valid_input(choices):
             for key in choices.keys():
                 if valid_input.lower() in choices[key]:
                     key = key.replace('\033[1;32m', '').replace('\x1b[0m', '')
-                    print(f"returning: {key}")
+#                    print(f"returning: {key}")
                     return key
             print_pause("I'm sorry - I don't understand that. Please select"
                         " one of the following choices.")
@@ -115,7 +115,7 @@ def forest(monster):
                 " you saw from the clearing.")
     if "fought monster" not in actions:
         print_pause(f"In the clearing stands a fearsome {monster}!")
-        choices.extend(["Run away!", "Fight!"])
+        choices.update({"Run away!" : ["run", "run away"], "Fight!" : ["fight"]})
     action = valid_input(choices)
     if action == "Pick flowers":
         if "fought monster" not in actions:
@@ -196,7 +196,7 @@ def farmhouse():
 
     Users must have the keys to unlock the door and continue on.
     """
-    choices = {"\033[1;32mKnock\033[0m on door" : ["knock"], "\033[1;32mLook\033[0m under \033[1;32mwelcome mat\033[0m" : ["look", "welcome mat"], "\033[1;32mOpen door\033[0m" : ["open door"],
+    choices = {"\033[1;32mKnock\033[0m on door" : ["knock"], "\033[1;32mLook\033[0m under \033[1;32mwelcome mat\033[0m" : ["look", "welcome mat", "mat", "welcome"], "\033[1;32mOpen\033[0m door" : ["open door", "open"],
                "\033[1;32mReturn\033[0m to \033[1;32mclearing\033[0m": ["return", "clearing"]}
     print_pause("\nYou are standing on the front porch of a weathered but"
                 " still pleasant-looking farmhouse. ")
@@ -204,7 +204,7 @@ def farmhouse():
     print_pause("The wooden front door is solidly closed, with a note that"
                 " says \'Doorbell broken. Please knock.\'")
     if "keys" in inventory:
-        choices.update({"Unlock the front door" : ["unlock", "front door"]})
+        choices.update({"\033[1;32mUnlock\033[0m the front door" : ["unlock", "front door"]})
     if "look under mat" in actions:
         choices.pop("\033[1;32mLook\033[0m under \033[1;32mwelcome mat\033[0m")
     action = valid_input(choices)
@@ -277,7 +277,7 @@ def house_livingroom():
     This area contains the tray, which is required to bring everything to the
     bedroom, and the vase, which is needed to bring flowers.
     """
-    choices = {"Go to the kitchen" : ["kitchen"], "Return to entryway" : ["return", "entryway"], "Sit on the couch" : ["sit", "couch"],
+    choices = {"Go to the kitchen" : ["kitchen"], "Return to entryway" : ["return", "entryway", "entry"], "Sit on the couch" : ["sit", "couch"],
                "Read magazines" : ["read", "magazines", "read magazines"], "Knock on the bedroom door" : ["knock", "bedroom"]}
     print_pause("\nYou are standing in the living room of the farmhouse.")
     print_pause("A comfy-looking couch sits next to a coffee table covered in"
@@ -358,7 +358,7 @@ def house_kitchen():
     "flowers" and coffee may be made (adds "cup of coffee" to
     inventory and "made coffee" to actions list.)
     """
-    choices = {"Go to living room" : ["living room"]}
+    choices = {"Go to living room" : ["living room", "living"]}
     if "vase" in inventory and "flowers" in inventory:
         if "flowers in vase" not in inventory:
             choices.update({"Put flowers in vase" : ["flowers", "vase"]})
@@ -368,9 +368,9 @@ def house_kitchen():
     print_pause("To the right of that, on the counter, are several coffee"
                 " mugs and a fancy-looking coffee maker.")
     if "make coffee" not in actions:
-        choices.update({"Make coffee" : ["make coffee"]})
+        choices.update({"Make coffee" : ["make coffee", "coffee"]})
     if "make coffee" in actions and "cup of coffee" not in inventory:
-        choices.update({"Pick up cup of coffee" : ["cup of coffee"]})
+        choices.update({"Pick up cup of coffee" : ["cup of coffee", "coffee"]})
         print_pause("A steaming cup of coffee sits on the counter.")
     action = valid_input(choices)
     if action == "Go to living room":
@@ -440,8 +440,8 @@ def house_bedroom(monster):
                 " smile and a Starfleet Academy t-shirt.")
     print_pause("She reaches for the cup of coffee and beckons"
                 " for you to follow her into the bedroom.")
-    print_pause(f"\"By the way\", she asks. \"Have you seen my"
-                " pet {monster}?\"")
+    print_pause("\"By the way\", she asks. \"Have you seen my"
+                " pet {}?\"".format(monster))
     play_again()
 
 
